@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 
@@ -15,6 +16,7 @@ db.on("error", (error) => {
 db.once("open", () => console.log("Connected to the Database"));
 
 app.use(express.json());
+app.use(cors());
 
 const appsRouter = require("./routes/apps.route");
 app.use("/apps", appsRouter);
