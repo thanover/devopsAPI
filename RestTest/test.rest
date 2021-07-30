@@ -1,0 +1,33 @@
+GET http://localhost:3000/apps/
+
+###
+
+GET http://localhost:3000/apps/610350b73f00f92a0421ad51
+
+###
+
+GET http://localhost:3000/apps/appSearch/Test
+
+###
+
+POST http://localhost:3000/apps/  HTTP/1.1
+Content-Type: application/json
+
+{
+    "appId": "ap123456",
+    "productId": "pr000539",
+    "appName": "Test App 123456"
+}
+
+###
+
+DELETE http://localhost:3000/apps/61035a3057f293247c39be3f
+
+###
+
+PATCH http://localhost:3000/apps/610354587e831d21ac62124d
+Content-Type: application/json
+
+{
+    "appName": "Changed App Name"
+}
