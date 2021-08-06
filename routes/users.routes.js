@@ -1,47 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const App = require("../models/apps.model");
+const User = require("../models/users.model");
 
 //getting all apps
 router.get("/", async (req, res) => {
   try {
-    const apps = await App.find({}, { appLongName: 1 });
-    res.json(apps);
+    const user = await User.find();
+    res.json(user);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
 });
 
 //getting one app
-router.get("/:id", getApp, (req, res) => {
-  res.json(res.app);
-});
-
-router.get("/appSearch/:string", getAppByLongName, (req, res) => {
-  res.json(res.app);
+router.get("/:id", getUser, (req, res) => {
+  res.json(res.user);
 });
 
 //creating an app
 router.post("/", async (req, res) => {
-  const app = new App({
-    appId: req.body.appId,
-    productId: req.body.productId,
-    appName: req.body.appName,
-    appLongName: `${req.body.productId.toUpperCase()} - ${req.body.appId.toUpperCase()} - ${
-      req.body.appName
-    }`,
+  const user = new User({
+    name: req.body.name,
   });
 
   try {
-    const newApp = await app.save();
-    res.status(201).json(newApp);
+    const newUser = await user.save();
+    res.status(201).json(newUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
 //updating an app
-router.patch("/:id", getApp, async (req, res) => {
+router.patch("/:id", getUser, async (req, res) => {
   if (req.body.appId != null) {
     res.app.appId = req.body.appId;
   }
@@ -62,7 +53,7 @@ router.patch("/:id", getApp, async (req, res) => {
 });
 
 //deleting an app
-router.delete("/:id", getApp, async (req, res) => {
+router.delete("/:id", getUser, async (req, res) => {
   const tempApp = res.app;
   try {
     await res.app.remove();
@@ -72,21 +63,21 @@ router.delete("/:id", getApp, async (req, res) => {
   }
 });
 
-async function getApp(req, res, next) {
-  let app = undefined;
+async function getUser(req, res, next) {
+  let user = undefined;
   try {
-    app = await App.findById(req.params.id);
+    user = await User.findById(req.params.id);
 
-    if (app === null) {
+    if (user === null) {
       return res
         .status(404)
-        .json({ message: `Cannot find app with id ${req.params.id}` });
+        .json({ message: `Cannot find user with id ${req.params.id}` });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 
-  res.app = app;
+  res.user = user;
   next();
 }
 

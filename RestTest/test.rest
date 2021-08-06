@@ -1,16 +1,16 @@
-GET http://localhost:3000/apps/
+GET http://localhost:3001/apps/
 
 ###
 
-GET http://localhost:3000/apps/610350b73f00f92a0421ad51
+GET http://localhost:3001/apps/610350b73f00f92a0421ad51
 
 ###
 
-GET http://localhost:3000/apps/appSearch/Test
+GET http://localhost:3001/apps/appSearch/Test
 
 ###
 
-POST http://localhost:3000/apps/  HTTP/1.1
+POST http://localhost:3001/apps/  HTTP/1.1
 Content-Type: application/json
 
 {
@@ -21,13 +21,34 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/apps/61035a3057f293247c39be3f
+DELETE http://localhost:3001/apps/61035a3057f293247c39be3f
 
 ###
 
-PATCH http://localhost:3000/apps/610354587e831d21ac62124d
+PATCH http://localhost:3001/apps/610354587e831d21ac62124d
 Content-Type: application/json
 
 {
     "appName": "Changed App Name"
 }
+
+###
+
+GET http://localhost:3001/
+
+###
+
+POST http://localhost:3001/users/  HTTP/1.1
+Content-Type: application/json
+
+{
+    "name" : "Scott, Michael"
+}
+
+###
+
+GET http://localhost:3001/users/
+
+###
+
+GET http://localhost:3001/users/6105995424ebb8550052d660
