@@ -2,7 +2,7 @@ GET http://localhost:3001/apps/
 
 ###
 
-GET http://localhost:3001/apps/610350b73f00f92a0421ad51
+GET http://localhost:3001/apps/610594efb4639651ad0a3521
 
 ###
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3001/apps/61035a3057f293247c39be3f
+DELETE http://localhost:3001/apps/610594efb4639651ad0a3521
 
 ###
 
