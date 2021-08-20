@@ -25,6 +25,9 @@ app.use("/apps", appsRouter);
 const usersRouter = require("./routes/users.routes");
 app.use("/users", usersRouter);
 
+const datadogstacksRouter = require("./routes/datadogstack.routes");
+app.use("/datadogstacks", datadogstacksRouter);
+
 app.use("/", (req, res) => {
   res.send(`hello`);
 });

@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const App = require("../models/apps.model");
 const Datadogstack = require("../models/datadogstack.model");
 
 //getting all apps
 router.get("/", async (req, res) => {
   try {
-    const apps = await App.find({}, { appLongName: 1 });
+    const apps = await Datadogstack.find({}, { _id: 1 });
     res.json(apps);
   } catch (err) {
     res.status(500).send({ message: err.message });
@@ -14,36 +13,28 @@ router.get("/", async (req, res) => {
 });
 
 //getting one app
-router.get("/:id", getApp, (req, res) => {
-  res.json(res.app);
-});
-
-router.get("/appSearch/:string", getAppByLongName, (req, res) => {
-  res.json(res.app);
+router.get("/:id", getDatadogstack, (req, res) => {
+  res.json(res.datadogstack);
 });
 
 //creating an app
 router.post("/", async (req, res) => {
   console.log(`recieved request: ${req}`);
-  const app = new App({
+  const datadogstack = new Datadogstack({
     appId: req.body.appId,
-    productId: req.body.productId,
-    appName: req.body.appName,
-    appLongName: `${req.body.productId.toUpperCase()} - ${req.body.appId.toUpperCase()} - ${
-      req.body.appName
-    }`,
+    stackProps: req.body.stackProps,
   });
 
   try {
-    const newApp = await app.save();
-    res.status(201).json(newApp);
+    const newDatadogstack = await datadogstack.save();
+    res.status(201).json(newDatadogstack);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
 //updating an app
-router.patch("/:id", getApp, async (req, res) => {
+router.patch("/:id", getDatadogstack, async (req, res) => {
   if (req.body.appId != null) {
     res.app.appId = req.body.appId;
   }
@@ -64,7 +55,7 @@ router.patch("/:id", getApp, async (req, res) => {
 });
 
 //deleting an app
-router.delete("/:id", getApp, async (req, res) => {
+router.delete("/:id", getDatadogstack, async (req, res) => {
   const tempApp = res.app;
   try {
     await res.app.remove();
@@ -74,40 +65,40 @@ router.delete("/:id", getApp, async (req, res) => {
   }
 });
 
-async function getApp(req, res, next) {
-  let app = undefined;
+async function getDatadogstack(req, res, next) {
+  let datadogstack = undefined;
   try {
-    app = await App.findById(req.params.id);
+    datadogstack = await Datadogstack.findById(req.params.id);
 
-    if (app === null) {
+    if (datadogstack === null) {
       return res
         .status(404)
-        .json({ message: `Cannot find app with id ${req.params.id}` });
+        .json({ message: `Cannot find datadogstack with id ${req.params.id}` });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 
-  res.app = app;
+  res.datadogstack = datadogstack;
   next();
 }
 
-async function getAppByLongName(req, res, next) {
-  let app = undefined;
+async function getDatadogstackByAppId(req, res, next) {
+  let datadogstack = undefined;
   try {
-    app = await App.find({ $text: { $search: req.params.string } });
-    console.log(app);
+    datadogstack = await App.find({ $text: { $search: req.params.appId } });
+    console.log(datadogstack);
 
-    if (app === null) {
-      return res
-        .status(404)
-        .json({ message: `Cannot find app with id ${req.params.string}` });
+    if (datadogstack === null) {
+      return res.status(404).json({
+        message: `Cannot find datadogstack with appId: ${req.params.appId}`,
+      });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 
-  res.app = app;
+  res.datadogstack = datadogstack;
   // next();
 }
 

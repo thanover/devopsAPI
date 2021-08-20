@@ -25,7 +25,7 @@ DELETE http://localhost:3001/apps/610594efb4639651ad0a3521
 
 ###
 
-PATCH http://localhost:3001/apps/610354587e831d21ac62124d
+PATCH http://localhost:3001/apps/6111dfb6839c995b14e9f390
 Content-Type: application/json
 
 {
@@ -52,3 +52,7 @@ GET http://localhost:3001/users/
 ###
 
 GET http://localhost:3001/users/6105995424ebb8550052d660
+
+###
+
+GET http://localhost:3001/datadogstacks/6111dfb6839c995b14e9f391
